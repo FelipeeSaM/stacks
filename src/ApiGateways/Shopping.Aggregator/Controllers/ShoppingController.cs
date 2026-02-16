@@ -2,8 +2,6 @@
 using Shopping.Aggregator.Models;
 using Shopping.Aggregator.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -36,7 +34,7 @@ namespace Shopping.Aggregator.Controllers
 
             var basket = await _basketService.GetBasket(userName);
 
-            foreach (var item in basket.Items)
+            foreach(var item in basket.Items)
             {
                 var product = await _catalogService.GetCatalog(item.ProductId);
 
@@ -50,8 +48,7 @@ namespace Shopping.Aggregator.Controllers
 
             var orders = await _orderService.GetOrdersByUserName(userName);
 
-            var shoppingModel = new ShoppingModel
-            {
+            var shoppingModel = new ShoppingModel {
                 UserName = userName,
                 BasketWithProducts = basket,
                 Orders = orders

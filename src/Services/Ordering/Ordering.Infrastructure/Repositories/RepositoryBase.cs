@@ -17,7 +17,7 @@ namespace Ordering.Infrastructure.Repositories
         public RepositoryBase(OrderContext dbContext)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-        }        
+        }
 
         public async Task<IReadOnlyList<T>> GetAllAsync()
         {
@@ -32,13 +32,13 @@ namespace Ordering.Infrastructure.Repositories
         public async Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeString = null, bool disableTracking = true)
         {
             IQueryable<T> query = _dbContext.Set<T>();
-            if (disableTracking) query = query.AsNoTracking();
+            if(disableTracking) query = query.AsNoTracking();
 
-            if (!string.IsNullOrWhiteSpace(includeString)) query = query.Include(includeString);
+            if(!string.IsNullOrWhiteSpace(includeString)) query = query.Include(includeString);
 
-            if (predicate != null) query = query.Where(predicate);
+            if(predicate != null) query = query.Where(predicate);
 
-            if (orderBy != null)
+            if(orderBy != null)
                 return await orderBy(query).ToListAsync();
             return await query.ToListAsync();
         }
@@ -46,13 +46,13 @@ namespace Ordering.Infrastructure.Repositories
         public async Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, List<Expression<Func<T, object>>> includes = null, bool disableTracking = true)
         {
             IQueryable<T> query = _dbContext.Set<T>();
-            if (disableTracking) query = query.AsNoTracking();
+            if(disableTracking) query = query.AsNoTracking();
 
-            if (includes != null) query = includes.Aggregate(query, (current, include) => current.Include(include));
+            if(includes != null) query = includes.Aggregate(query, (current, include) => current.Include(include));
 
-            if (predicate != null) query = query.Where(predicate);
+            if(predicate != null) query = query.Where(predicate);
 
-            if (orderBy != null)
+            if(orderBy != null)
                 return await orderBy(query).ToListAsync();
             return await query.ToListAsync();
         }

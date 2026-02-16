@@ -6,9 +6,6 @@ using Ordering.Application.Contracts.Persistence;
 using Ordering.Application.Models;
 using Ordering.Domain.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -49,7 +46,7 @@ namespace Ordering.Application.Features.Orders.Commands.CheckoutOrder
             {
                 await _emailService.SendEmail(email);
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 _logger.LogError($"Order {order.Id} failed due to an error with the mail service: {ex.Message}");
             }

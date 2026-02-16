@@ -27,8 +27,7 @@ namespace Ordering.Infrastructure.Mail
             var to = new EmailAddress(email.To);
             var emailBody = email.Body;
 
-            var from = new EmailAddress
-            {
+            var from = new EmailAddress {
                 Email = _emailSettings.FromAddress,
                 Name = _emailSettings.FromName
             };
@@ -38,7 +37,7 @@ namespace Ordering.Infrastructure.Mail
 
             _logger.LogInformation("Email sent.");
 
-            if (response.StatusCode == System.Net.HttpStatusCode.Accepted || response.StatusCode == System.Net.HttpStatusCode.OK)
+            if(response.StatusCode == System.Net.HttpStatusCode.Accepted || response.StatusCode == System.Net.HttpStatusCode.OK)
                 return true;
 
             _logger.LogError("Email sending failed.");

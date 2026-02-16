@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace Ordering.Infrastructure.Migrations
 {
@@ -32,8 +32,7 @@ namespace Ordering.Infrastructure.Migrations
                     LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_Orders", x => x.Id);
                 });
         }

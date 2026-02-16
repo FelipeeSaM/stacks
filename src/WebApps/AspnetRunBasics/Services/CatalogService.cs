@@ -21,7 +21,7 @@ namespace AspnetRunBasics.Services
 
         public async Task<IEnumerable<CatalogModel>> GetCatalog()
         {
-            _logger.LogInformation("Getting products from the url: {url}", _client.BaseAddress);
+            _logger.LogInformation("Getting products from the url: {url} and custom property: {customProperty}", _client.BaseAddress, 6);
             var response = await _client.GetAsync("/Catalog");
             return await response.ReadContentAs<List<CatalogModel>>();
         }
@@ -41,7 +41,7 @@ namespace AspnetRunBasics.Services
         public async Task<CatalogModel> CreateCatalog(CatalogModel model)
         {
             var response = await _client.PostAsJson($"/Catalog", model);
-            if (response.IsSuccessStatusCode)
+            if(response.IsSuccessStatusCode)
                 return await response.ReadContentAs<CatalogModel>();
             else
             {

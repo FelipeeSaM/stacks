@@ -1,10 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using AspnetRunBasics.Models;
+﻿using AspnetRunBasics.Models;
 using AspnetRunBasics.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AspnetRunBasics
 {

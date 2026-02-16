@@ -18,10 +18,9 @@ namespace Basket.API.Entities
 
         public decimal TotalPrice
         {
-            get
-            {
+            get {
                 decimal totalprice = 0;
-                foreach (var item in Items)
+                foreach(var item in Items)
                 {
                     totalprice += item.Price * item.Quantity;
                 }

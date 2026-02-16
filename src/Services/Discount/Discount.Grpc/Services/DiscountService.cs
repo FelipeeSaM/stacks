@@ -25,7 +25,7 @@ namespace Discount.Grpc.Services
         public override async Task<CouponModel> GetDiscount(GetDiscountRequest request, ServerCallContext context)
         {
             var coupon = await _repository.GetDiscount(request.ProductName);
-            if (coupon == null)
+            if(coupon == null)
             {
                 throw new RpcException(new Status(StatusCode.NotFound, $"Discount with ProductName={request.ProductName} is not found."));
             }
@@ -60,8 +60,7 @@ namespace Discount.Grpc.Services
         public override async Task<DeleteDiscountResponse> DeleteDiscount(DeleteDiscountRequest request, ServerCallContext context)
         {
             var deleted = await _repository.DeleteDiscount(request.ProductName);
-            var response = new DeleteDiscountResponse
-            {
+            var response = new DeleteDiscountResponse {
                 Success = deleted
             };
 

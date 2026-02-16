@@ -12,7 +12,7 @@ namespace Discount.Grpc.Extensions
         {
             int retryForAvailability = retry.Value;
 
-            using (var scope = host.Services.CreateScope())
+            using(var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
                 var configuration = services.GetRequiredService<IConfiguration>();
@@ -26,8 +26,7 @@ namespace Discount.Grpc.Extensions
                         (configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
                     connection.Open();
 
-                    using var command = new NpgsqlCommand
-                    {
+                    using var command = new NpgsqlCommand {
                         Connection = connection
                     };
 
@@ -48,11 +47,11 @@ namespace Discount.Grpc.Extensions
 
                     logger.LogInformation("Migrated postresql database.");
                 }
-                catch (NpgsqlException ex)
+                catch(NpgsqlException ex)
                 {
                     logger.LogError(ex, "An error occurred while migrating the postresql database");
 
-                    if (retryForAvailability < 50)
+                    if(retryForAvailability < 50)
                     {
                         retryForAvailability++;
                         System.Threading.Thread.Sleep(2000);

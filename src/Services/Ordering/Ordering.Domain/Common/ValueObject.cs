@@ -9,7 +9,7 @@ namespace Ordering.Domain.Common
     {
         protected static bool EqualOperator(ValueObject left, ValueObject right)
         {
-            if (left is null ^ right is null)
+            if(left is null ^ right is null)
             {
                 return false;
             }
@@ -26,7 +26,7 @@ namespace Ordering.Domain.Common
 
         public override bool Equals(object obj)
         {
-            if (obj == null || obj.GetType() != GetType())
+            if(obj == null || obj.GetType() != GetType())
             {
                 return false;
             }

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using AspnetRunBasics.Models;
+﻿using AspnetRunBasics.Models;
 using AspnetRunBasics.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
+using System.Threading.Tasks;
 
 namespace AspnetRunBasics
 {
@@ -28,13 +28,13 @@ namespace AspnetRunBasics
 
         public async Task<IActionResult> OnGetAsync(string productId)
         {
-            if (productId == null)
+            if(productId == null)
             {
                 return NotFound();
             }
 
             Product = await _catalogService.GetCatalog(productId);
-            if (Product == null)
+            if(Product == null)
             {
                 return NotFound();
             }
@@ -48,8 +48,7 @@ namespace AspnetRunBasics
             var userName = "swn";
             var basket = await _basketService.GetBasket(userName);
 
-            basket.Items.Add(new BasketItemModel
-            {
+            basket.Items.Add(new BasketItemModel {
                 ProductId = productId,
                 ProductName = product.Name,
                 Price = product.Price,

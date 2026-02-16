@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AspnetRunBasics.Models;
+﻿using AspnetRunBasics.Models;
 using AspnetRunBasics.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AspnetRunBasics
 {
@@ -32,12 +32,11 @@ namespace AspnetRunBasics
             var productList = await _catalogService.GetCatalog();
             CategoryList = productList.Select(p => p.Category).Distinct();
 
-            if (!string.IsNullOrWhiteSpace(categoryName))
+            if(!string.IsNullOrWhiteSpace(categoryName))
             {
                 ProductList = productList.Where(p => p.Category == categoryName);
                 SelectedCategory = categoryName;
-            }
-            else
+            } else
             {
                 ProductList = productList;
             }
@@ -52,8 +51,7 @@ namespace AspnetRunBasics
             var userName = "swn";
             var basket = await _basketService.GetBasket(userName);
 
-            basket.Items.Add(new BasketItemModel
-            {
+            basket.Items.Add(new BasketItemModel {
                 ProductId = productId,
                 ProductName = product.Name,
                 Price = product.Price,

@@ -2,19 +2,13 @@ using EventBus.Messages.Common;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Ordering.API.EventBusConsumer;
 using Ordering.Application;
 using Ordering.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Ordering.API
 {
@@ -41,8 +35,7 @@ namespace Ordering.API
                 config.UsingRabbitMq((ctx, cfg) => {
                     cfg.Host(Configuration["EventBusSettings:HostAddress"]);
 
-                    cfg.ReceiveEndpoint(EventBusConstants.BasketCheckoutQueue, c =>
-                    {
+                    cfg.ReceiveEndpoint(EventBusConstants.BasketCheckoutQueue, c => {
                         c.ConfigureConsumer<BasketCheckoutConsumer>(ctx);
                     });
                 });
@@ -54,8 +47,7 @@ namespace Ordering.API
             services.AddScoped<BasketCheckoutConsumer>();
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
+            services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Ordering.API", Version = "v1" });
             });
         }
@@ -63,7 +55,7 @@ namespace Ordering.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if(env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
@@ -74,8 +66,7 @@ namespace Ordering.API
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
+            app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();
             });
         }

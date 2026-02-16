@@ -1,9 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using AspnetRunBasics.Models;
+﻿using AspnetRunBasics.Models;
 using AspnetRunBasics.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
+using System.Threading.Tasks;
 
 namespace AspnetRunBasics
 {
@@ -36,7 +36,7 @@ namespace AspnetRunBasics
             var userName = "swn";
             Cart = await _basketService.GetBasket(userName);
 
-            if (!ModelState.IsValid)
+            if(!ModelState.IsValid)
             {
                 return Page();
             }
@@ -45,8 +45,8 @@ namespace AspnetRunBasics
             Order.TotalPrice = Cart.TotalPrice;
 
             await _basketService.CheckoutBasket(Order);
-            
+
             return RedirectToPage("Confirmation", "OrderSubmitted");
-        }       
+        }
     }
 }
