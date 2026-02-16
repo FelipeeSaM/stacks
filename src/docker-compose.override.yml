@@ -157,7 +157,7 @@ services:
       - discount.api
       - ordering.api
     ports:
-      - "8006:80"
+      - "8006:80" 
 
   elasticsearch:
     container_name: elasticsearch
