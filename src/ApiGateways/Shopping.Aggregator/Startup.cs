@@ -35,7 +35,7 @@ namespace Shopping.Aggregator
             services.AddHttpClient<IOrderService, OrderService>(c =>
                 c.BaseAddress = new Uri(Configuration["ApiSettings:OrderingUrl"]))
                 .AddHttpMessageHandler<LoggingDelegatingHandler>();
-
+             
             services.AddControllers();
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Shopping.Aggregator", Version = "v1" });
