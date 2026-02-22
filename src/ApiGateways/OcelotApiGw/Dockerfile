@@ -1,20 +1,28 @@
-#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+# Acesse https://aka.ms/customizecontainer para saber como personalizar seu contêiner de depuração e como o Visual Studio usa este Dockerfile para criar suas imagens para uma depuração mais rápida.
 
+# Esta fase é usada durante a execução no VS no modo rápido (Padrão para a configuração de Depuração)
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 WORKDIR /app
 EXPOSE 80
 
+
+# Esta fase é usada para compilar o projeto de serviço
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["ApiGateways/OcelotApiGw/OcelotApiGw.csproj", "ApiGateways/OcelotApiGw/"]
-RUN dotnet restore "ApiGateways/OcelotApiGw/OcelotApiGw.csproj"
+COPY ["BuildingBlocks/Common.Logging/Common.Logging.csproj", "BuildingBlocks/Common.Logging/"]
+RUN dotnet restore "./ApiGateways/OcelotApiGw/OcelotApiGw.csproj"
 COPY . .
 WORKDIR "/src/ApiGateways/OcelotApiGw"
-RUN dotnet build "OcelotApiGw.csproj" -c Release -o /app/build
+RUN dotnet build "./OcelotApiGw.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
+# Esta fase é usada para publicar o projeto de serviço a ser copiado para a fase final
 FROM build AS publish
-RUN dotnet publish "OcelotApiGw.csproj" -c Release -o /app/publish
+ARG BUILD_CONFIGURATION=Release
+RUN dotnet publish "./OcelotApiGw.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
+# Esta fase é usada na produção ou quando executada no VS no modo normal (padrão quando não está usando a configuração de Depuração)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
