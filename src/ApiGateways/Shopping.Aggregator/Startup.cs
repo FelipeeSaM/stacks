@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Polly;
 using Shopping.Aggregator.Services;
 using System;
 
@@ -30,7 +31,8 @@ namespace Shopping.Aggregator
 
             services.AddHttpClient<IBasketService, BasketService>(c =>
                 c.BaseAddress = new Uri(Configuration["ApiSettings:BasketUrl"]))
-                .AddHttpMessageHandler<LoggingDelegatingHandler>();
+                .AddHttpMessageHandler<LoggingDelegatingHandler>()
+                .AddTransientHttpErrorPolicy(policy => policy.WaitAndRetryAsync(3, _ => TimeSpan.FromSeconds(2)));
 
             services.AddHttpClient<IOrderService, OrderService>(c =>
                 c.BaseAddress = new Uri(Configuration["ApiSettings:OrderingUrl"]))
