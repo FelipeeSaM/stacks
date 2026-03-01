@@ -12,8 +12,6 @@ namespace Discount.API.Extensions
     {
         public static IHost MigrateDatabase<TContext>(this IHost host)
         {
-            int retryForAvailability = retry.Value;
-
             using(var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
@@ -42,12 +40,6 @@ namespace Discount.API.Extensions
                 {
                     logger.LogError(ex, "An error occurred while migrating the postresql database");
 
-                    if(retryForAvailability < 50)
-                    {
-                        retryForAvailability++;
-                        System.Threading.Thread.Sleep(2000);
-                        MigrateDatabase<TContext>(host, retryForAvailability);
-                    }
                 }
             }
 

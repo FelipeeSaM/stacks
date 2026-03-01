@@ -60,8 +60,6 @@ namespace Basket.API
                 .AddRedis(Configuration["CacheSettings:ConnectionString"],
                 "Redis health",
                 HealthStatus.Degraded);
-
-            services.AddMassTransitHostedService();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
